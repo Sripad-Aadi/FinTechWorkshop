@@ -4,6 +4,7 @@ const app = express()
 app.listen(8080, ()=>{console.log('server is running')})
 app.set('view engine','ejs')
 app.set('views','views')
+app.use(express.urlencoded({extended:true}));
 
 const users = [
     {
@@ -30,6 +31,22 @@ app.get('/',(req,res)=>{
 
 app.get('/login',(req,res)=>{
     res.render('login');
+});
+
+app.post('/login',(req,res)=>{
+    const {email,password} = req.body
+    const user = users.find(user=>user.email===email)
+    if (user){
+        if (user.password === password){
+            res.redirect('/')
+        }
+        else{
+            res.redirect('/login')
+        }
+    }
+    else{
+        res.redirect('/login')
+    }
 });
 
 app.get('/register',(req,res)=>{
