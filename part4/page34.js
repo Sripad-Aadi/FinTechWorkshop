@@ -25,7 +25,7 @@ const users = [
 
 
 app.get('/',(req,res)=>{
-    res.render('dashboard');
+    res.render('dashboard',{users});
 });
 
 app.get('/login',(req,res)=>{
