@@ -5,8 +5,27 @@ app.listen(8080, ()=>{console.log('server is running')})
 app.set('view engine','ejs')
 app.set('views','views')
 
+const users = [
+    {
+        name:'Sripad',
+        email:'sripad@gmail.com',
+        password:'1234',
+    },
+    {
+        name:'Navdeep',
+        email:'navdeep@gmail.com',
+        password:'1234',
+    },
+    {
+        name:'Sathvik',
+        email:'sathvik@gmail.com',
+        password:'1234',
+    },
+]
+
+
 app.get('/',(req,res)=>{
-    res.render('home');
+    res.render('dashboard');
 });
 
 app.get('/login',(req,res)=>{

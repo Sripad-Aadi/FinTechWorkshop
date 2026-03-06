@@ -7,14 +7,14 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form action="/register">
-        <label for="name">Enter your name:</label>
-        <input type="text"> <br>
-        <label for="name">Enter your email:</label>
-        <input type="text"> <br>
-        <label for="name">Enter your mobile:</label>
-        <input type="text"> <br>
-        <button type="submit">Register</button>
+    <form action="/register" method="POST">
+        <p><input type="text" id="name" placeholder="Name"></p>
+        <p><input type="text" id="email" placeholder="Email"></p> 
+        <p><input type="text" id="password" placeholder="Password"></p> 
+        <button type="submit" id="submit">Register</button>
     </form>
+    <p>
+        Already a member? <a href="/login">login</a> here!
+    </p>
 </body>
 </html>
