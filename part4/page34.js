@@ -1,11 +1,19 @@
 import express from 'express'
-import { redirect } from 'react-router-dom'
+import session from 'express-session'
 
 const app = express()
 app.listen(8080, ()=>{console.log('server is running')})
 app.set('view engine','ejs')
 app.set('views','views')
 app.use(express.urlencoded({extended:true}));
+
+app.use(
+    session({
+        secret:'mySecretKey',
+        resave:false, // if true it resaves the session id even if no chnage in session id
+        saveUninitialized:false, //if true then a default junk session key is created 
+    }),
+);
 
 let users = [
     {
@@ -27,7 +35,12 @@ let users = [
 
 
 app.get('/',(req,res)=>{
-    res.render('dashboard',{users});
+    if(req.session.user){
+        res.render('dashboard',{users});
+    }
+    else{
+        res.redirect('/login');
+    }
 });
 
 app.get('/login',(req,res)=>{
@@ -39,6 +52,7 @@ app.post('/login',(req,res)=>{
     const user = users.find(user=>user.email===email)
     if (user){
         if (user.password === password){
+            req.session.user = user //session id gets created after 1st login (session id is available in inspect->application->cookies)
             res.redirect('/')
         }
         else{
