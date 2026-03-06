@@ -1,4 +1,5 @@
 import express from 'express'
+import { redirect } from 'react-router-dom'
 
 const app = express()
 app.listen(8080, ()=>{console.log('server is running')})
@@ -6,7 +7,7 @@ app.set('view engine','ejs')
 app.set('views','views')
 app.use(express.urlencoded({extended:true}));
 
-const users = [
+let users = [
     {
         name:'Sripad',
         email:'sripad@gmail.com',
@@ -30,7 +31,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/login',(req,res)=>{
-    res.render('login');
+    res.render('login',{error: null});
 });
 
 app.post('/login',(req,res)=>{
@@ -41,14 +42,19 @@ app.post('/login',(req,res)=>{
             res.redirect('/')
         }
         else{
-            res.redirect('/login')
+            res.render('login',{ error: "Invalid Password"})
         }
     }
     else{
-        res.redirect('/login')
+        res.render('login',{ error: "User not found" })
     }
 });
 
 app.get('/register',(req,res)=>{
     res.render('register');
+});
+
+app.post('/register',(req,res)=>{
+    users = [...users,req.body]
+    res.redirect('/')
 });
