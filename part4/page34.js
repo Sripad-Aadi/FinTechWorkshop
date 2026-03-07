@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session'
+import expressLayouts from 'express-ejs-layouts'
 
 const app = express()
 app.listen(8080, ()=>{console.log('server is running')})
@@ -14,6 +15,9 @@ app.use(
         saveUninitialized:false, //if true then a default junk session key is created 
     }),
 );
+app.use(express.static('public'))
+app.use(expressLayouts)
+app.set('layout','layout')
 
 let users = [
     {
